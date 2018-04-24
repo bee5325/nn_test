@@ -9,11 +9,8 @@ import time
 #t2 = 0
 #t3 = 0
 
-CIRCLES = 5000
+CIRCLES = 500
 NUM_POINTS = 40
-
-window = pyglet.window.Window(800, 600)
-batch = pyglet.graphics.Batch()
 
 cos_value = [cos(radians(float(i)/NUM_POINTS * 360)) for i in range(NUM_POINTS)]
 sin_value = [sin(radians(float(i)/NUM_POINTS * 360)) for i in range(NUM_POINTS)]
@@ -66,40 +63,46 @@ class Circle():
     def delete(self):
         self.vertex_list.delete()
 
-def makeCircles(number, center_x, center_y, radius, batch):
-    color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-    circles = []
-    for i in range(number):
-        circles.append(Circle(random.randint(0,800), random.randint(0,600), radius, color, batch))
-    return circles
 
-circles = makeCircles(CIRCLES, random.randint(0,800), random.randint(0,600), 20, batch)
+if __name__ == "__main__":
 
-@window.event
-def on_draw():
-    glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
-    batch.draw()
+    window = pyglet.window.Window(800, 600)
+    batch = pyglet.graphics.Batch()
 
-    #GL_TRIANGLE_STRIP global count, t0, t1, t2, t3
-    #count += 1
-    #if count % 10 == 0:
-    #    print('------------------------------------')
-    #    print("CALC    ", t0)
-    #    print("ADD VERT", t1)
-    #    print("VERT 1  ", t2)
-    #    print("VERT 2  ", t3)
-    #    t0 = 0
-    #    t1 = 0
-    #    t2 = 0
-    #    t3 = 0
-    fps_display.draw()
+    def makeCircles(number, center_x, center_y, radius, batch):
+        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        circles = []
+        for i in range(number):
+            circles.append(Circle(random.randint(0,800), random.randint(0,600), radius, color, batch))
+        return circles
 
-fps_display = pyglet.clock.ClockDisplay()
+    circles = makeCircles(CIRCLES, random.randint(0,800), random.randint(0,600), 20, batch)
 
-def update(dt):
-    for circle in circles:
-        circle.set_position(random.randint(0,800), random.randint(0,600))
+    @window.event
+    def on_draw():
+        glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
+        batch.draw()
 
-pyglet.clock.schedule_interval(update, 0.01)
+        #GL_TRIANGLE_STRIP global count, t0, t1, t2, t3
+        #count += 1
+        #if count % 10 == 0:
+        #    print('------------------------------------')
+        #    print("CALC    ", t0)
+        #    print("ADD VERT", t1)
+        #    print("VERT 1  ", t2)
+        #    print("VERT 2  ", t3)
+        #    t0 = 0
+        #    t1 = 0
+        #    t2 = 0
+        #    t3 = 0
+        fps_display.draw()
 
-pyglet.app.run()
+    fps_display = pyglet.clock.ClockDisplay()
+
+    def update(dt):
+        for circle in circles:
+            circle.set_position(random.randint(0,800), random.randint(0,600))
+
+    pyglet.clock.schedule_interval(update, 0.01)
+
+    pyglet.app.run()

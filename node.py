@@ -1,6 +1,3 @@
-import pyglet, random, math
-
-
 class Node():
 
     def __init__(self):
